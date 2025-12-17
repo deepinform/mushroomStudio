@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSHROOM STUDIO - 学情诊断报告</title>
+    <style>
+        :root {
+            /* 蘑菇工作室品牌色 */
+            --brand-red: #e84a3b;   /* 蘑菇红 */
+            --brand-black: #1a1a1a; /* 经典黑 */
+            --brand-gray: #f4f4f4;  /* 背景灰 */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-line: #dddddd;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            background-color: #555; /* 浏览器预览背景 */
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        /* A4 纸张容器 */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 15mm 20mm; /* A4页边距 */
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        /* ================= Header ================= */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--brand-red); /* 品牌红底线 */
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            height: 120px; /* 根据实际Logo调整高度 */
+            width: auto;
+            display: block;
+        }
+        
+        /* 如果没有图片，用文字代替的样式，有了图片这个会自动被图片顶替 */
+        .logo-placeholder {
+            font-weight: 900;
+            font-size: 24px;
+            color: var(--brand-black);
+            letter-spacing: -1px;
+        }
+        .logo-placeholder span { color: var(--brand-red); }
+
+        .report-meta {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .report-meta strong {
+            color: var(--brand-red);
+            font-weight: 700;
+        }
+
+        /* ================= Headings ================= */
+        h1 {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--brand-black);
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: 16px;
+            color: var(--brand-black);
+            border-left: 6px solid var(--brand-red);
+            padding-left: 12px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff0f0, #fff);
+            padding-top: 6px;
+            padding-bottom: 6px;
+            font-weight: 700;
+        }
+
+        /* ================= Visual Charts (CSS Made) ================= */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-box {
+            background: var(--brand-gray);
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid var(--border-line);
+        }
+
+        .chart-title {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* 模拟能力条 */
+        .skill-bar-container {
+            margin-bottom: 12px;
+        }
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        .bar-bg {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            background: var(--brand-red);
+            border-radius: 4px;
+        }
+        .bar-fill.secondary { background: var(--brand-black); }
+
+        /* ================= Diagnosis Content ================= */
+        .diagnosis-card {
+            border: 1px solid var(--border-line);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .diagnosis-card::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 4px;
+            height: 20px;
+            background: var(--brand-black);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--brand-black);
+            margin-bottom: 8px;
+            padding-left: 10px;
+        }
+
+        .evidence-block {
+            background: #fdfdfd;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 10px;
+            font-family: Consolas, Monaco, "Courier New", monospace;
+        }
+
+        .evidence-tag {
+            background: var(--brand-red);
+            color: white;
+            padding: 1px 5px;
+            font-size: 10px;
+            border-radius: 2px;
+            margin-right: 5px;
+            text-transform: uppercase;
+        }
+
+        .analysis-text {
+            font-size: 13px;
+            color: #333;
+            text-align: justify;
+        }
+
+        .highlight {
+            color: var(--brand-red);
+            font-weight: bold;
+        }
+
+        /* ================= Plan Table ================= */
+        .strategy-intro {
+            font-size: 13px;
+            background: #fff0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        th {
+            background-color: var(--brand-black);
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            border: 1px solid var(--border-line);
+            padding: 12px 10px;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) { background-color: #fafafa; }
+
+        .phase-cell {
+            background-color: #f4f4f4;
+            font-weight: bold;
+            color: var(--brand-black);
+            width: 12%;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        .module-tag {
+            display: inline-block;
+            border: 1px solid var(--brand-black);
+            color: var(--brand-black);
+            font-size: 10px;
+            padding: 1px 4px;
+            margin-bottom: 4px;
+            border-radius: 2px;
+        }
+
+        /* ================= Footer ================= */
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-line);
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* 打印按钮 */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--brand-red);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        .print-btn:hover { background-color: #c0392b; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { width: 100%; margin: 0; padding: 0; box-shadow: none; }
+            .print-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">打印 / 保存PDF</button>
+
+<div class="page">
+    <header>
+        <div class="logo-container">
+            <!-- 请将图片命名为 logo.png 并放在同一文件夹下，或者修改下方的 src -->
+            <img src="..\logo.png" alt="MUSHROOM STUDIO" onerror="this.style.display='none'; document.getElementById('txt-logo').style.display='block';">
+            <!-- 图片加载失败时的文字备选 -->
+            <div id="txt-logo" class="logo-placeholder" style="display:none;">
+                蘑菇<span>工作室</span>
+            </div>
+        </div>
+        <div class="report-meta">
+            学员姓名：<strong>姚翰麟 (Grade 9)</strong><br>
+            校内进度：<strong>9B Unit 1 </strong><br>
+            测试依据：<strong>9A Unit 1-6 阶段性综合测评</strong><br>
+            诊断日期：2025年12月17日
+        </div>
+    </header>
+
+    <h1>阶段性水平诊断报告与课程规划</h1>
+
+    <!-- 仪表盘：可视化概览 -->
+    <div class="dashboard-grid">
+        <div class="chart-box">
+            <div class="chart-title">当前能力维度透视 (Current Status)</div>
+            <div class="skill-bar-container">
+                <div class="skill-label"><span>阅读理解 (Reading)</span><span>中等</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div>
+            </div>
+            <div class="skill-bar-container">
+                <div class="skill-label"><span>语法精确度 (Grammar Accuracy)</span><span style="color:var(--brand-red)">薄弱</span></div>
+                <div class="bar-bg"><div class="bar-fill secondary" style="width: 40%;"></div></div>
+            </div>
+            <div class="skill-bar-container">
+                <div class="skill-label"><span>词汇变形 (Morphology)</span><span style="color:var(--brand-red)">急需提升</span></div>
+                <div class="bar-bg"><div class="bar-fill secondary" style="width: 35%;"></div></div>
+            </div>
+            <div class="skill-bar-container">
+                <div class="skill-label"><span>逻辑推理 (Logic)</span><span>中等</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 60%;"></div></div>
+            </div>
+        </div>
+        <div class="chart-box" style="display:flex; flex-direction:column; justify-content:center;">
+            <div class="chart-title">核心策略：双螺旋推进 (Double Helix)</div>
+            <div style="font-size: 13px; color: #333; line-height: 1.8;">
+                <span style="color:var(--brand-red); font-weight:bold;">● 同步线 (Sync)：</span> 紧扣学校 9B Unit 1 & 2 新课，确保近期校内考试得分。<br>
+                <span style="color:var(--brand-black); font-weight:bold;">● 复习线 (Review)：</span> 将 9A 测评中暴露的“非谓语”与“词性”漏洞融入新课教学。
+            </div>
+        </div>
+    </div>
+
+    <!-- 第一部分：深度诊断 -->
+    <h2>PART 1. 学情深度诊断 (Evidence-Based Diagnosis)</h2>
+    <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+        基于本次 Unit 1-6 综合测评卷及深度面谈，学生具备良好的语感基础，阅读理解能力处于中等水平。但在面对中考高频考点时，存在<strong>“感性认知多于理性分析”</strong>的特点，主要体现在以下三个核心维度：
+    </p>
+
+    <!-- 诊断卡片 1 -->
+    <div class="diagnosis-card">
+        <div class="card-title">1. 词性维度的“精确化转型” (Lexical Precision)</div>
+        <div class="evidence-block">
+            <span class="evidence-tag">试卷原题</span> Q1: made of gold (n.) / golden (adj.) light<br>
+            <span class="evidence-tag">试卷原题</span> Q2: same ______ (weigh). 学生误填 weighed (v.)
+        </div>
+        <div class="analysis-text">
+            <strong>诊断分析：</strong>学生对单词的掌握主要停留在“语义理解”层面，但在“词性功能”的运用上存在断层。在中考中，词性转换是必考点。我们需要从单纯的“背单词”升级为<strong>“词族（Word Family）构建”</strong>，建立对后缀（-tion, -ly, -ness）的敏感度，避免类似 Q8 (exaction) 的生造词情况。
+        </div>
+    </div>
+
+    <!-- 诊断卡片 2 -->
+    <div class="diagnosis-card">
+        <div class="card-title">2. 句法逻辑的“结构化重塑” (Syntactic Logic)</div>
+        <div class="evidence-block">
+            <span class="evidence-tag">试卷原题</span> Q10: ask sb ______ (finish). 误选 finishing<br>
+            <span class="evidence-tag">试卷原题</span> Q11: 宾语从句语序 Could you tell me...?
+        </div>
+        <div class="analysis-text">
+            <strong>诊断分析：</strong>这是九年级最大的拉分板块。学生在处理 <code>to do</code>（目的/将来）与 <code>doing</code>（过程/状态）时缺乏清晰标准，多凭语感蒙题。同时，在宾语从句中，对<strong>“陈述语序”</strong>这一核心规则的执行不够坚定。教学重点将在于把“直觉”转化为“理性的成分分析能力”。
+        </div>
+    </div>
+
+    <!-- 诊断卡片 3 -->
+    <div class="diagnosis-card">
+        <div class="card-title">3. 答题效能优化 (Performance Optimization)</div>
+        <div class="analysis-text" style="padding-top:5px;">
+            <strong>诊断分析：</strong>卷面反映出学生思维活跃，但在细节处理上稍显急躁（如划掉的单词）。部分失分并非知识盲区，而是属于<strong>“非智力因素损耗”</strong>（如审题时对时态线索的捕捉、对单复数变化的关注度）。通过针对性训练建立“审题SOP”，可快速挽回 10-15 分的隐形失分。
+        </div>
+    </div>
+
+    <!-- 第二部分：规划 -->
+    <h2>PART 2. 秋季班冲刺规划 (Strategic Roadmap)</h2>
+    <div class="strategy-intro">
+        📅 周期：2025/12/21 - 2026/01/25 (共5周) &nbsp;|&nbsp; 🎯 目标：校内考试提分 + 9A 漏洞修复
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>阶段周期</th>
+                <th width="44%">线下核心课 (2H) · 深度构建</th>
+                <th width="44%">线上辅助课 (1H) · 巩固闭环</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="phase-cell">PHASE 1<br>校内同步<br>概念重构</td>
+                <td>
+                    <div class="module-tag">9B</div>
+                    <strong>核心考点通关：</strong><br>
+                    深度解析 9B 重点词汇（Exploration/Wealthy）及长难句，确保校内听写、小测建立优势。<br><br>
+                    <div class="module-tag">专项修复</div>
+                    <strong>词性雷达构建：</strong><br>
+                    结合试卷错题，系统梳理 n./adj./adv. 转换规律，杜绝词性混淆。
+                </td>
+                <td>
+                    <strong>校内重点落实：</strong><br>
+                    针对 9B 重点词组进行精准拼写过关。<br><br>
+                    <strong>语法逻辑初探：</strong><br>
+                    简单梳理 <code>so...that</code> (结果状语从句) 逻辑，解决连词判断问题。
+                </td>
+            </tr>
+            <tr>
+                <td class="phase-cell">PHASE 2<br>难点攻坚<br>体系闭环</td>
+                <td>
+                    <div class="module-tag">9B Unit 2</div>
+                    <strong>文化与阅读逻辑：</strong><br>
+                    结合 Culture Shock 话题，进行阅读逻辑训练，提升信息捕捉精度。<br><br>
+                    <div class="module-tag">语法重塑</div>
+                    <strong>动词逻辑专项：</strong><br>
+                    彻底理清 <code>to do</code> 与 <code>doing</code> 的判别标准，建立动词搭配的记忆体系（修复试卷Q10/Q15错误）。
+                </td>
+                <td>
+                    <strong>阅读技巧点拨：</strong><br>
+                    针对阅读理解细节题，训练“圈画关键词”的答题习惯。<br><br>
+                    <strong>知识点复盘：</strong><br>
+                    抽查动词固定搭配，确保记忆准确无误。
+                </td>
+            </tr>
+            <tr>
+                <td class="phase-cell">PHASE 3<br>期末冲刺<br>全真模拟</td>
+                <td>
+                    <div class="module-tag">综合实战</div>
+                    <strong>期末高频考点押题：</strong><br>
+                    汇总常考“易错题”与“陷阱题”突击；全真模拟训练答题节奏。<br><br>
+                    <div class="module-tag">作文升格</div>
+                    <strong>高级句型应用：</strong><br>
+                    利用 9B 学到的句型（It remains to be seen...）升级作文表达。
+                </td>
+                <td>
+                    <strong>考前保温：</strong><br>
+                    考前心态调整，核心词汇与句型的最后巩固，确保会做的题不丢分。
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 第三部分：建议 -->
+    <h2>PART 3. 家校配合建议 (Cooperation)</h2>
+    <ul style="font-size: 13px; color: #444; padding-left: 20px; margin: 0;">
+        <li style="margin-bottom: 10px;"><strong>正向强化 (Confidence)：</strong> 现阶段自信心至关重要。对于学校近期的小测验，重点关注其<strong>“进步点”</strong>（如词性转换正确率提升），激发内驱力。</li>
+        <li style="margin-bottom: 10px;"><strong>闭环思维 (Completion)：</strong> 工作室布置的练习主打<strong>“精准”</strong>而非题海。请督促孩子按时完成当天的“知识点清零”，以便老师在线上课进行针对性检查。</li>
+        <li style="margin-bottom: 10px;"><strong>信息同步 (Sync)：</strong> 若学校有临时的单元测试或作业反馈，请及时拍照发给我们，我们将灵活调整线下课重心，确保孩子在学校“听得懂、跟得上”。</li>
+    </ul>
+
+    <footer>
+        MUSHROOM STUDIO 蘑菇英语工作室 · PROFESSIONAL ENGLISH EDUCATION<br>
+        INTERNAL DIAGNOSTIC REPORT 2025
+    </footer>
+</div>
+
+</body>
+</html>
