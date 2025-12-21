@@ -16,43 +16,41 @@
 
         body {
             font-family: "Microsoft YaHei", "PingFang SC", "Heiti SC", sans-serif;
-            background-color: #f0f0f0; /* 屏幕背景灰，突出A4纸效果 */
+            background-color: #f0f0f0; 
             color: #333;
-            line-height: 1.5;
-            font-size: 14px;
+            line-height: 1.4; /* 稍微调小行高以容纳更多内容 */
+            font-size: 13px; /* 微调基础字号 */
         }
 
         /* A4 纸张模拟 */
         .page {
             width: 210mm;
             min-height: 297mm;
-            padding: 15mm 20mm;
+            padding: 12mm 18mm; /* 稍微减小边距 */
             margin: 20px auto;
             background: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         /* 打印专用样式 */
         @media print {
-            body {
-                background: white;
-            }
+            body { background: white; }
             .page {
                 box-shadow: none;
                 margin: 0;
                 width: auto;
                 height: auto;
-                padding: 0; /* 打印时由打印机边距控制，或者保持少量内边距 */
+                padding: 0; 
             }
-            .no-print {
-                display: none;
-            }
+            .no-print { display: none; }
         }
 
         /* ---------------- 配色方案 ---------------- */
         :root {
-            --primary-red: #cc0000; /* 深红 */
+            --primary-red: #cc0000;
             --dark-black: #1a1a1a;
             --light-grey: #f4f4f4;
             --border-color: #ddd;
@@ -63,26 +61,24 @@
         /* 顶部 Header */
         header {
             border-bottom: 4px solid var(--primary-red);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
 
         .header-left h1 {
-            font-size: 32px;
+            font-size: 28px;
             color: var(--dark-black);
             font-weight: 900;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
-        .header-left h1 span {
-            color: var(--primary-red);
-        }
+        .header-left h1 span { color: var(--primary-red); }
 
         .header-left p {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: #555;
             letter-spacing: 1px;
@@ -90,43 +86,43 @@
 
         .header-right {
             text-align: right;
-            font-size: 12px;
+            font-size: 11px;
             color: #777;
         }
 
         /* 模块通用标题 */
         .section-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: white;
             background-color: var(--dark-black);
             display: inline-block;
-            padding: 5px 15px;
-            margin-bottom: 15px;
+            padding: 4px 12px;
+            margin-bottom: 12px;
             border-left: 5px solid var(--primary-red);
         }
 
         /* 第一部分：简介与实绩 (双栏布局) */
         .grid-2 {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1fr 1.3fr;
             gap: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .info-box h3 {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--primary-red);
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-            margin-bottom: 8px;
-            margin-top: 10px;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+            margin-top: 8px;
         }
         .info-box h3:first-child { margin-top: 0; }
 
         .info-content {
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            margin-bottom: 8px;
             text-align: justify;
         }
 
@@ -139,20 +135,20 @@
         .focus-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .focus-card {
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 8px;
             background: var(--light-grey);
         }
 
         .focus-card h4 {
             color: var(--primary-red);
-            font-size: 14px;
-            margin-bottom: 8px;
+            font-size: 13px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
         }
@@ -166,13 +162,13 @@
 
         .focus-list {
             list-style: none;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .focus-list li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             position: relative;
-            padding-left: 12px;
+            padding-left: 10px;
         }
 
         .focus-list li::before {
@@ -185,21 +181,21 @@
 
         /* 第三部分：表格 */
         .table-container {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .update-time {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
             text-align: right;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             font-style: italic;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         thead {
@@ -209,93 +205,133 @@
 
         th, td {
             border: 1px solid #ccc;
-            padding: 6px 8px;
+            padding: 5px 6px;
             text-align: center;
         }
 
-        th {
-            font-weight: normal;
-        }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .score-up { color: var(--primary-red); font-weight: bold; }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        /* 成绩提升强调 */
-        .score-up {
-            color: var(--primary-red);
-            font-weight: bold;
-        }
-
-        /* 第四部分：满意度 (底部) */
+        /* 第四部分：满意度 */
         .ratings-section {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             align-items: flex-start;
+            margin-bottom: 20px;
         }
 
         .rating-box {
-            flex: 0 0 160px;
+            flex: 0 0 140px;
             text-align: center;
             border: 2px solid var(--dark-black);
-            padding: 15px;
+            padding: 10px;
             background: white;
         }
 
         .big-score {
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 900;
             color: var(--primary-red);
             line-height: 1;
         }
 
         .score-label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             margin-top: 5px;
             display: block;
         }
 
         .sub-ratings {
-            margin-top: 10px;
-            font-size: 11px;
+            margin-top: 8px;
+            font-size: 10px;
             text-align: left;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .rating-desc {
             flex: 1;
-            font-size: 11px;
+            font-size: 10px;
             color: #444;
             border-left: 2px solid #ddd;
-            padding-left: 15px;
+            padding-left: 12px;
         }
         
         .rating-desc h5 {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--dark-black);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: bold;
         }
 
         .desc-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
         
-        .desc-item strong {
-            color: var(--primary-red);
+        /* 第五部分：联系二维码 (新增) */
+        .contact-container {
+            margin-top: auto; /* 推到底部 */
+            border-top: 2px dashed #ccc;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
         }
 
-        /* 装饰元素 */
-        .footer-deco {
-            margin-top: 20px;
-            border-top: 1px solid var(--dark-black);
-            padding-top: 10px;
+        .contact-card {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .contact-card img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain; /* 确保二维码不变形 */
+            border: 1px solid var(--dark-black);
+            margin-right: 15px;
+            display: block;
+        }
+
+        /* 占位图样式，如果找不到图片时显示 */
+        .contact-card img:after {
+            content: "暂无图片";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #eee;
             text-align: center;
+            line-height: 70px;
             font-size: 10px;
-            color: #888;
+        }
+
+        .contact-info h6 {
+            font-size: 14px;
+            color: var(--primary-red);
+            margin-bottom: 5px;
+        }
+
+        .contact-info p {
+            font-size: 11px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* 页脚装饰 */
+        .footer-deco {
+            margin-top: 15px;
+            background-color: var(--dark-black);
+            color: white;
+            padding: 5px;
+            text-align: center;
+            font-size: 9px;
+            letter-spacing: 2px;
         }
 
         /* 打印按钮 */
@@ -312,9 +348,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1000;
         }
-        .print-btn:hover {
-            background: #a00000;
-        }
+        .print-btn:hover { background: #a00000; }
 
     </style>
 </head>
@@ -344,8 +378,7 @@
                 <div class="info-box">
                     <h3>学历背景</h3>
                     <div class="info-content">
-                        <strong>香港理工大学 (PolyU)</strong><br>
-                        本科学士
+                        <strong>香港理工大学 (PolyU)</strong> | 本科学士
                     </div>
                 </div>
 
@@ -354,26 +387,23 @@
                     <div class="info-content">
                         • <strong>5年</strong>深圳一线英语教学经验<br>
                         • 累计授课时长超 <strong>3000+</strong> 小时<br>
-                        • 经手学员 100+ 人<br>
-                        • 长期深耕福田百花及南山片区，熟悉《牛津深圳版》体系。
+                        • 经手学员 100+ 人，深耕福田百花及南山片区，熟悉《牛津深圳版》体系。
                     </div>
                 </div>
             </div>
 
             <!-- 右列：教学实绩 -->
             <div class="col-right">
-                <div class="section-title" style="visibility: hidden; display: none;"></div> <!-- 占位 -->
-                <div class="info-box" style="margin-top: 50px;"> <!-- 对齐 -->
+                <div class="section-title" style="visibility: hidden; display: none;"></div> 
+                <div class="info-box" style="margin-top: 40px;">
                     <h3>教学实绩</h3>
                     <div class="info-content">
-                        <p style="margin-bottom: 8px;">
+                        <p style="margin-bottom: 6px;">
                             擅长中层生提优与尖子生冲刺。累计带教初三毕业班学员20余人，<span class="highlight-text">普高升学率100%，八大录取率超60%</span>。
                         </p>
-                        <div style="background: #fff0f0; padding: 8px; border-left: 3px solid var(--primary-red);">
-                            <p><strong>📉 提分案例 (基础薄弱 70分段)：</strong><br>
-                            平均4周(8次课)内规范答题习惯，卷面提升 10-15分。</p>
-                            <p style="margin-top:5px;"><strong>📈 冲刺案例 (高分段 95分段)：</strong><br>
-                            重点攻克完形填空与阅读逻辑，稳定率提升至 98% 以上。</p>
+                        <div style="background: #fff0f0; padding: 6px; border-left: 3px solid var(--primary-red);">
+                            <p><strong>📉 提分案例 (70分段)：</strong> 4周内规范习惯，卷面提升 10-15分。</p>
+                            <p style="margin-top:4px;"><strong>📈 冲刺案例 (95分段)：</strong> 攻克完形与阅读逻辑，稳定率 98%+。</p>
                         </div>
                     </div>
                 </div>
@@ -387,22 +417,22 @@
                 <div class="focus-card">
                     <h4>毕业班集训 (G9/G12)</h4>
                     <ul class="focus-list">
-                        <li><strong>中考英语：</strong>紧扣考纲，三轮复习规划（基础过筛-专项突破-真题模拟）。</li>
-                        <li><strong>高考英语：</strong>高中语法体系梳理与长难句分析，题型专项训练。</li>
+                        <li><strong>中考：</strong>紧扣考纲，三轮复习规划。</li>
+                        <li><strong>高考：</strong>语法体系梳理，题型专项。</li>
                     </ul>
                 </div>
                 <div class="focus-card">
                     <h4>初中英语培优</h4>
                     <ul class="focus-list">
-                        <li><strong>校内同步：</strong>保持公立进度一致，单元重难点拓展。</li>
-                        <li><strong>体系构建：</strong>系统讲解初中八大时态及从句逻辑。</li>
+                        <li><strong>校内：</strong>保持公立进度，重难点拓展。</li>
+                        <li><strong>体系：</strong>初中八大时态及从句逻辑。</li>
                     </ul>
                 </div>
                 <div class="focus-card">
                     <h4>专项技能</h4>
                     <ul class="focus-list">
-                        <li><strong>深圳中考听说：</strong>针对“人机对话”考试(25分)实战训练。</li>
-                        <li><strong>PET/KET：</strong>剑桥考级口语话题专项辅导。</li>
+                        <li><strong>中考听说：</strong>人机对话实战训练。</li>
+                        <li><strong>PET/KET：</strong>口语话题专项辅导。</li>
                     </ul>
                 </div>
             </div>
@@ -418,11 +448,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 10%;">姓名</th>
+                        <th style="width: 12%;">姓名</th>
                         <th style="width: 25%;">年级/区域</th>
-                        <th style="width: 25%;">参照考试 (成绩)</th>
+                        <th style="width: 23%;">参照考试 (成绩)</th>
                         <th style="width: 15%;">2025期中考</th>
-                        <th style="width: 15%;">提升幅度</th>
+                        <th style="width: 25%;">提升幅度</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -430,70 +460,70 @@
                         <td>姚*麟</td>
                         <td>G9 (南山区)</td>
                         <td>G8下期末: 45</td>
-                        <td><strong>72</strong> / 100</td>
+                        <td><strong>72</strong></td>
                         <td class="score-up">+27</td>
                     </tr>
                     <tr>
                         <td>陈*轩</td>
                         <td>G9 (福田区)</td>
                         <td>G9入学摸底: 78</td>
-                        <td><strong>96</strong> / 100</td>
+                        <td><strong>96</strong></td>
                         <td class="score-up">+18</td>
                     </tr>
                     <tr>
                         <td>李*彤</td>
                         <td>G9 (罗湖区)</td>
                         <td>G8下期末: 82</td>
-                        <td><strong>91</strong> / 100</td>
+                        <td><strong>91</strong></td>
                         <td class="score-up">+9</td>
                     </tr>
                     <tr>
                         <td>张*宇</td>
                         <td>G9 (福田百花)</td>
-                        <td>G9第一次月考: 75</td>
-                        <td><strong>88.5</strong> / 100</td>
+                        <td>G9月考: 75</td>
+                        <td><strong>88.5</strong></td>
                         <td class="score-up">+13.5</td>
                     </tr>
                     <tr>
                         <td>王*雅</td>
                         <td>G9 (南山区)</td>
                         <td>G8下期末: 91</td>
-                        <td><strong>97</strong> / 100</td>
+                        <td><strong>97</strong></td>
                         <td class="score-up">+6 (高分突破)</td>
                     </tr>
                     <tr>
                         <td>黄*桦</td>
                         <td>G7 (福田区)</td>
-                        <td>G7入学分班: 78</td>
-                        <td><strong>92</strong> / 100</td>
+                        <td>G7分班考: 78</td>
+                        <td><strong>92</strong></td>
                         <td class="score-up">+14</td>
                     </tr>
                     <tr>
                         <td>林*昊</td>
                         <td>G7 (南山区)</td>
                         <td>G6下期末: 85</td>
-                        <td><strong>94</strong> / 100</td>
+                        <td><strong>94</strong></td>
                         <td class="score-up">+9</td>
                     </tr>
                     <tr>
                         <td>陈*怡</td>
                         <td>G7 (福田区)</td>
-                        <td>G7入学摸底: 68</td>
-                        <td><strong>81</strong> / 100</td>
+                        <td>G7摸底考: 68</td>
+                        <td><strong>81</strong></td>
                         <td class="score-up">+13</td>
                     </tr>
                     <tr>
                         <td>刘*然</td>
                         <td>G7 (宝安区)</td>
-                        <td>G7第一次月考: 72</td>
-                        <td><strong>86</strong> / 100</td>
+                        <td>G7月考: 72</td>
+                        <td><strong>86</strong></td>
                         <td class="score-up">+14</td>
                     </tr>
                     <tr>
                         <td>赵*泽</td>
                         <td>G7 (福田百花)</td>
-                        <td>G7入学分班: 88</td>
-                        <td><strong>96</strong> / 100</td>
+                        <td>G7分班考: 88</td>
+                        <td><strong>96</strong></td>
                         <td class="score-up">+8</td>
                     </tr>
                 </tbody>
@@ -503,38 +533,68 @@
         <!-- 第四部分：满意度调查 -->
         <div class="ratings-section">
             <div class="rating-box">
-                <div class="big-score">4.9<span style="font-size: 20px;color:#333;font-weight:normal;">/5</span></div>
+                <div class="big-score">4.9</div>
                 <span class="score-label">综合评分 🌟</span>
                 <div class="sub-ratings">
-                    <div>成绩达标: <strong>4.9</strong></div>
-                    <div>学生满意: <strong>4.9</strong></div>
-                    <div>家长满意: <strong>4.9</strong></div>
+                    <div>成绩达标: 4.9</div>
+                    <div>学生满意: 4.9</div>
+                    <div>家长满意: 4.9</div>
                 </div>
             </div>
 
             <div class="rating-desc">
                 <h5>【评分等级说明 - 质量交付标准】</h5>
                 <div class="desc-grid">
-                    <div class="desc-item">
+                    <div>
                         <strong>4.5 (卓越)</strong><br>
-                        成绩显著提升或保持头部优势；课后提供可视化考点分析无延迟；家长零异议。
+                        成绩显著提升；可视化考点分析无延迟；家长零异议。
                     </div>
-                    <div class="desc-item">
+                    <div>
                         <strong>4.0 (合格)</strong><br>
-                        成绩稳步提升无下滑；按时反馈作业与课堂情况；教学流程规范，无投诉。
+                        成绩稳步提升；按时反馈作业与课堂情况；教学无投诉。
                     </div>
-                    <div class="desc-item" style="color: #666;">
+                    <div style="color: #666;">
                         <strong>3.5 (不合格)</strong><br>
-                        成绩连续两次无起色或下滑；反馈无数据支撑；出现家长投诉或学生抗拒。
+                        成绩无起色；反馈无数据支撑；出现家长投诉。
                     </div>
                 </div>
-                <p style="margin-top: 8px; font-style: italic;">统计周期：2025年秋季班中期（11月）</p>
+            </div>
+        </div>
+
+        <!-- 第五部分：微信联系方式 -->
+        <div class="contact-container">
+            <!-- Hanks 二维码 -->
+            <div class="contact-card">
+                <!-- 引用本地图片：hanks_qr_code.jpg -->
+                <img src="hanks_qr_code.jpg" alt="Hanks老师微信二维码">
+                <div class="contact-info">
+                    <h6>Hanks 老师 (本人)</h6>
+                    <p>
+                        ✅ <strong>考情学情诊断</strong><br>
+                        ✅ <strong>学生学习规划</strong><br>
+                        <span style="color:#888;">扫码添加，直接沟通教学细节</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Ada 二维码 -->
+            <div class="contact-card">
+                <!-- 引用本地图片：ada_qr_code.png -->
+                <img src="ada_qr_code.png" alt="Ada老师微信二维码">
+                <div class="contact-info">
+                    <h6>Ada 老师 (课程咨询)</h6>
+                    <p>
+                        ✅ <strong>排课/调课事务</strong><br>
+                        ✅ <strong>课程费用咨询</strong><br>
+                        <span style="color:#888;">扫码添加，获取最新课程表</span>
+                    </p>
+                </div>
             </div>
         </div>
 
         <!-- 页脚装饰 -->
         <div class="footer-deco">
-            HANKS ENGLISH TEACHING ARCHIVE &copy; 2025 | 专注初高中英语提分与培优
+            HANKS ENGLISH TEACHING ARCHIVE &copy; 2025 | 专注初高中英语提分与培优 | 内部档案 请勿外传
         </div>
 
     </div>
